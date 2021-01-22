@@ -1,0 +1,270 @@
+Formatbeschreibung PMV
+"fileversion": UNSIGNED(4)
+"V_gameversion_B7074000:0x407b7": UNSIGNED(old0/new4)
+"playtime": UNSIGNED(4)
+"header_new_dummy": UNSIGNED(old0/new4)
+"mapname": STRING(null)
+"header_size_until_actions": UNSIGNED(4)
+"unknown": BYTES(2)
+"V_7": UNSIGNED(4)
+"?player_per_team": UNSIGNED(1)
+"V_0200": BYTES(old4/new2)
+"host_player_id": INTEGER(8)
+"?group_count": UNSIGNED(1)
+"matrix_length": UNSIGNED(2)
+"matrix": Information[3](matrix_length)
+"?header_length": UNSIGNED(2)
+"header_info": Information[3](?header_length)
+"decks": Information[8](-1)
+"actions": Information[3](-1)
+
+Formatbeschreibung matrix
+"i": UNSIGNED(1)
+"j": UNSIGNED(1)
+"v": INTEGER(1)
+
+Formatbeschreibung header_info
+"name": STRING(null)
+"group_id": UNSIGNED(4)
+"value": BYTES(old3/new2)
+
+Formatbeschreibung decks
+"player_name": WSTRING(null)
+"player_id": INTEGER(8)
+"group_id": UNSIGNED(1)
+"subgroup_id": UNSIGNED(1)
+"?decktype": UNSIGNED(1)
+"cardcount": UNSIGNED(1)
+"cardcount.hi": UNSIGNED(1)
+"cards": Information[3](cardcount)
+
+Formatbeschreibung decks.cards
+"id": UNSIGNED(2)
+"upgrade": UNSIGNED(2)
+"charges": UNSIGNED(1)
+
+Formatbeschreibung actions
+"time": UNSIGNED(4)
+"size": UNSIGNED(4)
+"data": BYTES(size)
+
+Das Feld "data" jeder Aktion kann mehrere Aktionen enthalten.
+Jede dieser Aktionen beginnt mit 4 Bytes, die den Typ der Aktion angeben, in Zukunft Key genannt.
+
+"header_size_until_actions" gibt an, wieviele Bytes vorwärts gesprungen werden muss um zu den Aktionen zu gelangen.
+Somit gibt es die Größe des headers an.
+
+Key: 4001
+"typ": FIX(0) = REALLY_UNKNOWN_A1
+"who": UNSIGNED(4)
+"zero": UNSIGNED(4)
+
+Key: 4002
+"typ": FIX(0) = leave game
+"who": UNSIGNED(4)
+
+Key: 4006
+"typ": FIX(0) = PVE_UNKNOWN_A6
+"bytes": BYTES(12)
+"count": UNSIGNED(4)
+"subbytes": Information[1](count)
+Subkey: 4006.subbytes
+"bytes": BYTES(12)
+
+Key: 4008
+"typ": FIX(0) = PVE_UNKNOWN_A8
+"bytes": BYTES(4)
+"count": UNSIGNED(4)
+"subbytes": Information[1](count)
+Subkey: 4008.subbytes
+"bytes": BYTES(12)
+
+Key: 4009
+"typ": FIX(0) = summon unit
+"cast": FIX(0) = true
+"card": UNSIGNED(2)
+"cardx": UNSIGNED(2)
+"who": UNSIGNED(4)
+"byte": UNSIGNED(1)
+"cardc": UNSIGNED(2)
+"cardcx": UNSIGNED(2)
+"charges": INTEGER(1)
+"x": REAL(4)
+"y": REAL(4)
+"zero": UNSIGNED(4)
+
+Key: 4010
+"typ": FIX(0) = cast spell
+"cast": FIX(0) = true
+"card": UNSIGNED(2)
+"cardx": UNSIGNED(2)
+"who": UNSIGNED(4)
+"byte": UNSIGNED(1)
+"cardc": UNSIGNED(2)
+"cardcx": UNSIGNED(2)
+"charges": INTEGER(1)
+"bytes": BYTES(5)
+"value": UNSIGNED(4)
+"zero": UNSIGNED(4)
+"target": UNSIGNED(4)
+"x": REAL(4)
+"y": REAL(4)
+
+Key: 4011
+"typ": FIX(0) = cast line spell
+"cast": FIX(0) = true
+"card": UNSIGNED(2)
+"cardx": UNSIGNED(2)
+"who": UNSIGNED(4)
+"charges": INTEGER(1)
+"cardc": UNSIGNED(2)
+"cardcx": UNSIGNED(2)
+"bytes": BYTES(18)
+"x": REAL(4)
+"y": REAL(4)
+"bytes2": BYTES(12)
+"x2": REAL(4)
+"y2": REAL(4)
+
+Key: 4012
+"typ": FIX(0) = cast building
+"cast": FIX(0) = true
+"card": UNSIGNED(2)
+"cardx": UNSIGNED(2)
+"who": UNSIGNED(4)
+"cardb": UNSIGNED(2)
+"cardbx": UNSIGNED(2)
+"x": REAL(4)
+"z": UNSIGNED(4)
+"y": REAL(4)
+"zero": UNSIGNED(4)
+"cardc": UNSIGNED(2)
+"cardcx": UNSIGNED(2)
+"charges": INTEGER(1)
+
+Key: 4013
+"typ": FIX(0) = move unit
+"who": UNSIGNED(4)
+"unit_count": UNSIGNED(2)
+"unit": Information[1](unit_count)
+"position_count": UNSIGNED(2)
+"position": Information[2](position_count)
+"bytes": BYTES(6)
+Subkey: 4013.unit
+"unit": UNSIGNED(4)
+Subkey: 4013.position
+"x": REAL(4)
+"y": REAL(4)
+
+Key: 4014
+"typ": FIX(0) = use unit ability
+"who": UNSIGNED(4)
+"unit": UNSIGNED(4)
+"card": UNSIGNED(2)
+"cardx": UNSIGNED(2)
+"bytes": BYTES(5)
+"duration": UNSIGNED(4)
+"zero": UNSIGNED(4)
+"target": UNSIGNED(4)
+"x": REAL(4)
+"y": REAL(4)
+
+Key: 4015
+"typ": FIX(0) = attack
+"who": UNSIGNED(4)
+"unit_count": UNSIGNED(2)
+"unit": Information[1](unit_count)
+"data": BYTES(5)
+"value1": UNSIGNED(4)
+"value2": UNSIGNED(4)
+"target": UNSIGNED(4)
+"x": REAL(4)
+"y": REAL(4)
+"byte": UNSIGNED(1)
+Subkey: 4015.unit
+"unit": UNSIGNED(4)
+
+Key: 4019
+"typ": FIX(0) = stop unit
+"who": UNSIGNED(4)
+"unit_count": UNSIGNED(2)
+"unit": Information[1](unit_count)
+Subkey: 4019.unit
+"unit": UNSIGNED(4)
+
+Key: 4020
+"typ": FIX(0) = hold unit position
+"who": UNSIGNED(4)
+"unit_count": UNSIGNED(2)
+"unit": Information[1](unit_count)
+Subkey: 4020.unit
+"unit": UNSIGNED(4)
+
+Key: 4027
+"typ": FIX(0) = UNKNOWN_BB
+"who": UNSIGNED(4)
+"bytes": BYTES(17)
+"x": REAL(4)
+"y": REAL(4)
+"zero": UNSIGNED(2)
+
+Key: 4028
+"typ": FIX(0) = toggle wall gate
+"who": UNSIGNED(4)
+"value": UNSIGNED(4)
+
+Key: 4029
+"typ": FIX(0) = build wall
+"who": UNSIGNED(4)
+"unit": UNSIGNED(4)
+
+Key: 4030
+"typ": FIX(0) = create mana
+"who": UNSIGNED(4)
+"unit": UNSIGNED(4)
+
+Key: 4031
+"typ": FIX(0) = create orb
+"who": UNSIGNED(4)
+"unit": UNSIGNED(4)
+"color": UNSIGNED(1)
+
+Key: 4033
+"typ": FIX(0) = UNKNOWN_C1
+"who": UNSIGNED(4)
+"unit_count": UNSIGNED(2)
+"unit": Information[1](unit_count)
+"bytes": BYTES(4)
+"zero": UNSIGNED(4)
+Subkey: 4033.unit
+"unit": UNSIGNED(4)
+
+Key: 4034
+"typ": FIX(0) = UNKNOWN_C2
+"who": UNSIGNED(4)
+"unit": UNSIGNED(4)
+"card": UNSIGNED(2)
+"cardx": UNSIGNED(2)
+
+Key: 4035
+"typ": FIX(0) = ??ability_C3??
+"who": UNSIGNED(4)
+"unit": UNSIGNED(4)
+"zero": UNSIGNED(4)
+
+Key: 4041
+"typ": FIX(0) = ?destroy_c9?
+"who": UNSIGNED(4)
+"unit_count": UNSIGNED(4)
+"unit": Information[1](unit_count)
+Subkey: 4041.unit
+"unit": UNSIGNED(4)
+
+Key: 4043
+"typ": FIX(0) = PVE_UNKNOWN_CB
+"who": UNSIGNED(4)
+"unit_count": UNSIGNED(4)
+"unit": Information[1](unit_count)
+"target": UNSIGNED(4)
+Subkey: 4043.unit
+"unit": UNSIGNED(4)
