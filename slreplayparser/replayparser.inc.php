@@ -166,15 +166,12 @@ class SkylordsReplayParser{
            }
            unset($playerdata["enlightenment_played_before"]); // flag for calculations, no use in data
 
-           var_dump($playerdata);die();
 
            if(empty($playerdata["orbs"]["sum"]))continue; // npc player that did some stuff and messes up the replay
            if(empty($playerdata["cardsPlayed"]))continue; // npc player that did some stuff and messes up the replay
 
            $replaydata->setDataForNthPlayer($count, $playerdata);
 
-           echo $count;
-           if($count==4)throw new Exception("!!!");
            $count++;
        }
 
