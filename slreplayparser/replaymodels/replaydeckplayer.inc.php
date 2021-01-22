@@ -118,7 +118,8 @@ class SkylordsDeckPlayer{
     }
 
     /**
-     * Get Deck of Player as a String. It appears to be the wrong deck sometimes (see fyre example replay) so its better to use getDeckFromPlayedCards
+     * Get Deck of Player as a String. It appears to be the wrong deck sometimes so its better to use getDeckFromPlayedCards
+     * maybe the deck is filled with the client deck the replay if from because it is unknown to the game.
      * @return string
      */
     function getDeckString(){
