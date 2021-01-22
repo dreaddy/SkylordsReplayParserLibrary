@@ -30,6 +30,8 @@ class SkylordsDeckPlayer{
      */
     public $name;
 
+ 
+
     /**
      * Group of Player. "Real" Players (non NPC) are always in team 4 and 5. See "teams" in replaydata
      * @var int

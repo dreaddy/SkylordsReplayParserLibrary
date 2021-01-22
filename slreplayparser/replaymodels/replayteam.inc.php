@@ -18,34 +18,40 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."replaydeckcard.inc.php");
 class SkylordsTeam{
 
     /**
-     * Summary of $card
-     * @var SkylordsDeckPlayer[]
-     */
-    public $player;
-
-    /**
      * Summary of $name
      * @var string
      */
     public $name;
 
     /**
-     * Summary of $id
+     * npcflag? not certain what exactly this flag is saying. is 0 or 512
      * @var int
      */
+    public $npcflag;
+
+    /**
+     * Summary of $id
+     * @var boolean
+     */
     public $isNpc;
+
 
     /**
      * Summary of __construct
      * @param int $id
      * @param string $name
-     * @param SkylordsDeckPlayer[] $player
+     * @param int $npcflag
      */
-    function __construct($name, $id, $isNpc){
+    function __construct($name, $id, $npcflag){
 
         $this->id = $id;
         $this->name = $name;
-        $this->isNpc = $isNpc;
+        $this->npcflag = $npcflag;
+        $this->isNpc = $id!=SL_TEAM_1 && $id!=SL_TEAM_2; // npcflag seems not to be enough
+        /*if($this->npcflag == 0){
+            $this->isNpc = true;
+        }*/
+
 
    }
 

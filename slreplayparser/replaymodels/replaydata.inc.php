@@ -25,6 +25,8 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."../cardbase/card.inc.php");
  */
 class SkylordsReplayData{
 
+
+
    /**
     * detect the winner of the game. In theory this does not always work (although it does in most cases)
     * @return int
@@ -133,8 +135,15 @@ class SkylordsReplayData{
     */
    var $winnerteam;
 
+
    /**
-    * Teams in this game. Includes Players and NPC Factions (creeps, neutral, animal)
+    * Teams in this game. Includes only NPC Factions (creeps, neutral, animal)
+    * @var SkylordsTeam[]
+    */
+   var $npcteams;
+
+   /**
+    * Teams in this game. Includes only Players
     * @var SkylordsTeam[]
     */
    var $teams;
@@ -156,6 +165,29 @@ class SkylordsReplayData{
     * @var SkylordsDeckPlayer[]
     */
    var $players;
+
+   function isInNpcGroup($playerdata){
+       if(empty($playerdata->deck->deckcards))return true;
+       return false;/*
+
+       echo $groupid;
+
+       $players = $this->getPlayerByGroup($groupid);
+       var_dump($players);
+       foreach($players as $player){
+           if(empty($player->deck))return false;
+       }
+
+
+       foreach($this->teams as $team){
+           if($team->id == $groupid)
+           {
+               return false;
+           }
+       }
+
+       return true;*/
+   }
 
    function getPlayerByGroup($groupid){
 
@@ -216,7 +248,9 @@ class SkylordsReplayData{
 
        foreach($this->players as $key=>$entry){
 
-           if($entry->group_id != 4 && $entry->group_id != 5){
+           $count++;
+
+           if($entry->group_id != SL_TEAM_1 && $entry->group_id != SL_TEAM_2){
                continue;  // npc player, ignore
            }
 
@@ -226,12 +260,12 @@ class SkylordsReplayData{
                //$this->players[$key]->actionplayerid=$playerdata["actionplayerid"];
 
                foreach($playerdata as $pkey=>$pval){
+                   echo $this->players[$key]->name;
                    $this->players[$key]->$pkey=$pval;
                }
 
            }
 
-           $count++;
 
        }
 

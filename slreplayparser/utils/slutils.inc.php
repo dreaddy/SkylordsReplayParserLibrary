@@ -79,7 +79,7 @@ function sl_byteReadCount_get_clean(){
 
 function sl_getShortArrayFromString($string){
 
-    return array_values(unpack('v*', $string)); // s oder v? N oder V
+    return array_values(sl_strict_unpack('v*', $string)); // s oder v? N oder V
 
 
 }
@@ -88,21 +88,32 @@ function sl_readUInt64($handle){
     $sizeToRead = 8;
     sl_byteReadCount_add($sizeToRead);
     $bytes = fread( $handle, $sizeToRead);
-    return unpack("P",$bytes)[1];
+    return sl_strict_unpack("P",$bytes)[1];
 }
 
 function sl_readUInt32($handle){
     $sizeToRead = 4;
     sl_byteReadCount_add($sizeToRead);
     $bytes = fread( $handle, $sizeToRead);
-    return unpack("V",$bytes)[1];
+    return sl_strict_unpack("V",$bytes)[1];
+}
+
+function sl_strict_unpack($type, $bytes){
+
+    $retval = unpack($type,$bytes);
+    if($retval === false){
+        throw new Exception("unpack failed $type $bytes");
+    }
+
+    return $retval;
+
 }
 
 function sl_readUInt16($handle){
     $sizeToRead = 2;
     sl_byteReadCount_add($sizeToRead);
     $bytes = fread( $handle, $sizeToRead);
-    return unpack("v",$bytes)[1];
+    return sl_strict_unpack("v",$bytes)[1];
 }
 
 function sl_readUInt8($handle){
@@ -169,7 +180,7 @@ function sl_readString($handle, $sizelimit = -1){
 
 function sl_getByteArrayFromString($string){
 
-    return array_values(unpack('C*', $string));
+    return array_values(sl_strict_unpack('C*', $string));
 
 }
 

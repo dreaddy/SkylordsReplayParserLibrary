@@ -170,8 +170,8 @@ class SkylordsReplayParser{
                $playerdata["orbs"]["in_order"][]=ORB_NEUTRAL;
            }
 
-           $replaydata->setDataForNthPlayer($count++, $playerdata);
-
+           $replaydata->setDataForNthPlayer($count, $playerdata);
+           $count++;
        }
 
 
@@ -618,8 +618,8 @@ class SkylordsReplayParser{
 
        $this->_buffer=array();
 
-       for($i=0;$i<$count;$i++){
-           $this->_buffer[$i] = array("unitid"=>sl_readUInt32($fp));
+       for($i=0;$i<$count;$i++){ // TODO: something is wrong here. info is not that important, ignore for now
+          // $this->_buffer[$i] = array("unitid"=>sl_readUInt32($fp));
        }
 
        return $count;
@@ -636,8 +636,8 @@ class SkylordsReplayParser{
 
        $this->_buffer=array();
 
-       for($i=0;$i<$count;$i++){
-           $this->_buffer[$i] = array("x"=>sl_readUInt32($fp), "y"=>sl_readUInt32($fp));
+       for($i=0;$i<$count;$i++){ // TODO: something is wrong here. info is not that important, ignore for now
+         // $this->_buffer[$i] = array("x"=>sl_readUInt32($fp), "y"=>sl_readUInt32($fp));
        }
 
        return $count;
@@ -712,23 +712,32 @@ class SkylordsReplayParser{
        // contains who is allied to which player. Don't think it's required for us
 
        $replaydata->teams = array();
+       $replaydata->npcteams = array();
 
        $replaydata->teams_length = sl_readUInt16($fp);
 
        for($team_count=0; $team_count<$replaydata->teams_length; $team_count++){
 
-           $replaydata->teams[] =
-               new SkylordsTeam(sl_readString($fp, 200), sl_readUInt32($fp), sl_readUInt16($fp)!=0);
 
+               $newteam =
+               new SkylordsTeam(sl_readString($fp, 200), sl_readUInt32($fp), sl_readUInt16($fp));
+
+               if(!$newteam->isNpc){
+               $replaydata->teams[] = $newteam;
+               }else{
+                   $replaydata->npcteams[] = $newteam;
+               }
        }
 
        $replaydata->players = array();
+       $replaydata->npcplayers = array();
 
        while(ftell($fp)<$replaydata->header_size_until_actions){
 
            $playerinfo = new SkylordsDeckPlayer();
            $playerinfo->name_wstring = sl_readWstring($fp, 200);
            $playerinfo->name = preg_replace('/[[:cntrl:]]/', '', $playerinfo->name_wstring);
+
            $playerinfo->playerid = sl_readUInt64($fp);
            $playerinfo->group_id = sl_readUInt8($fp);
            $playerinfo->id_in_group = sl_readUInt8($fp);
@@ -757,8 +766,10 @@ class SkylordsReplayParser{
 
            $playerinfo->deck = new SkylordsDeck($deckcards);
 
-           $replaydata->players[] = $playerinfo;
-
+           if(!$replaydata->isInNpcGroup($playerinfo))
+               $replaydata->players[] = $playerinfo;
+           else
+               $replaydata->npcplayers[] = $playerinfo;
        }
 
 

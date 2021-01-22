@@ -19,6 +19,7 @@ $filename="19.01.2021, 02_15_59 randommap_GeneratedMap mit dreaddy (ONNX) vs pl_
 $filename="PvP Fyre dreaddy(FNN), Xerador(SOF) vs Shinlol(FOF), Linne(FNN) 2009-08-06 16-53-39.pmv";
 //$filename="6062_PvP_1on1_Peyon_vs_Ayrez_on_Random.pmv";
 //$filename="only_ww_in_deck.pmv";
+//$filename="rpve_22012021_fire.pmv";
 
 echo "loading: ".$filename;echo "<br>";
 
@@ -26,7 +27,7 @@ ob_start();
 $parser = new SkylordsReplayParser("testreplays/".$filename);
 $replaydata = $parser->loadData();
 $warnings=ob_get_clean();
-
+echo $warnings;
 echo "<p>Mapname: ".$replaydata->mapname."</p>";
 
 echo "<p>Duration of Replay: ".$replaydata->getReplayTimeString()."</p>";
@@ -35,10 +36,7 @@ echo "<p>Winner: ".$replaydata->getWinnerteamString()."</p>";
 
 foreach($replaydata->teams as $team){
 
-    // exclude npc teams
-    if($team->isNpc){
-        continue;
-    }
+
 
     echo "<hr>";
     echo "<h5>Group:".$team->id."(".$team->name.")"."</h5>";
