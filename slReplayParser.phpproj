@@ -30,7 +30,7 @@
     <Compile Include="testreplays\PvP Fyre dreaddy(FNN), Xerador(SOF) vs Shinlol(FOF), Linne(FNN) 2009-08-06 16-53-39.pmv" />
     <Compile Include="testreplays\PvP Yshia Pydracor(FS), Yasime(NO) vs dreaddy(FN), Xerador(SOF) 2009-08-05 01-01-10.pmv" />
     <Compile Include="testreplays\test.pmv" />
-    <Compile Include="replaytest.php" />
+    <Compile Include="index.php" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />

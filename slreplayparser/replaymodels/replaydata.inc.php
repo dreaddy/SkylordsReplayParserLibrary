@@ -244,23 +244,26 @@ class SkylordsReplayData{
     */
    function setDataForNthPlayer($n, $playerdata){
 
-       $count = 0;
+
 
        foreach($this->players as $key=>$entry){
 
-           $count++;
+           //echo "key is $key";
+          // echo count($this->players)." $n ";
 
            if($entry->group_id != SL_TEAM_1 && $entry->group_id != SL_TEAM_2){
                continue;  // npc player, ignore
            }
 
-           if($count == $n){
+           if($key == $n){
+              // echo "setting $n";
+
                //$this->players[$key]->actionsdata = $playerdata;
 
                //$this->players[$key]->actionplayerid=$playerdata["actionplayerid"];
 
                foreach($playerdata as $pkey=>$pval){
-                   echo $this->players[$key]->name;
+                   //echo $this->players[$key]->name;
                    $this->players[$key]->$pkey=$pval;
                }
 

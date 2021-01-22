@@ -160,17 +160,21 @@ class SkylordsReplayParser{
        foreach($actionplayer as $key=>$playerdata){
 
            $playerdata["apm"] = round($playerdata["actioncount"]/($playerdata["last_action"]/600), 3);
-
-           unset($playerdata["enlightenment_played_before"]); // flag for calculations, no use in data
-
            $playerdata["orbs"]["sum"] = $playerdata["orbs"][ORB_FIRE]+$playerdata["orbs"][ORB_FROST]+$playerdata["orbs"][ORB_NEUTRAL]+$playerdata["orbs"][ORB_SHADOW]+$playerdata["orbs"][ORB_NATURE];
-
-
            while($playerdata["orbs"]["sum"]>count($playerdata["orbs"]["in_order"])){
                $playerdata["orbs"]["in_order"][]=ORB_NEUTRAL;
            }
+           unset($playerdata["enlightenment_played_before"]); // flag for calculations, no use in data
+
+           var_dump($playerdata);die();
+
+           if(empty($playerdata["orbs"]["sum"]))continue; // npc player that did some stuff and messes up the replay
+           if(empty($playerdata["cardsPlayed"]))continue; // npc player that did some stuff and messes up the replay
 
            $replaydata->setDataForNthPlayer($count, $playerdata);
+
+           echo $count;
+           if($count==4)throw new Exception("!!!");
            $count++;
        }
 
@@ -492,7 +496,7 @@ class SkylordsReplayParser{
 
                             $data=
                         array(
-                          "type"=>"destoy",  // destroy unit, guessed, verify!
+                          "type"=>"destroy",  // destroy unit, guessed, verify!
                           "who"=>sl_readUInt32($fp),
                           "unit_count"=>$this->readUnits(sl_readUInt16($fp), $fp),
                           "unit"=>$this->_buffer);
