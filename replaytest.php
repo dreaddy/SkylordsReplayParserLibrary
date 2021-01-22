@@ -23,7 +23,7 @@ $filename="PvP Fyre dreaddy(FNN), Xerador(SOF) vs Shinlol(FOF), Linne(FNN) 2009-
 echo "loading: ".$filename;echo "<br>";
 
 ob_start();
-$parser = new SkylordsReplayParser("testreplays/".$filename, true);
+$parser = new SkylordsReplayParser("testreplays/".$filename);
 $replaydata = $parser->loadData();
 $warnings=ob_get_clean();
 
@@ -50,7 +50,7 @@ foreach($replaydata->teams as $team){
 
         echo "<p>APM:".$player->apm."</p>";
         echo "<p>Monuments:".$player->getOrbsString()."</p>";
-        echo "<p>Deck:".$player->getDeckString()."</p>";
+        echo "<p>Deck:".$player->getDeckStringFromPlayedCards()."</p>";
 
 
 

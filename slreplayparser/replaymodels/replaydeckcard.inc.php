@@ -39,6 +39,7 @@ class SkylordsDeckCard{
         return SkylordsCardbase::getInstance()->getCardById($cardid);
     }
 
+    public $cardid;
     public $deckcardid;
     public $cardupgrade;
     public $cardcharges;

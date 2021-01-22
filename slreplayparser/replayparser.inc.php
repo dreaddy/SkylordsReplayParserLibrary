@@ -744,6 +744,7 @@ class SkylordsReplayParser{
                $deckcard = new SkylordsDeckCard(null);
 
                $deckcard->deckcardid = sl_readUInt16($fp);
+               $deckcard->cardid = $deckcard->getOfficialCardid();
                $deckcard->cardupgrade = sl_readUInt16($fp)/15; // 15 30 45
                $deckcard->cardcharges = sl_readUInt8($fp);
                /*$deckcard->cardid = $deckcard->getOfficialCardid();

@@ -115,6 +115,10 @@ class SkylordsDeckPlayer{
 
     }
 
+    /**
+     * Get Deck of Player as a String. It appears to be the wrong deck sometimes (see fyre example replay) so its better to use getDeckFromPlayedCards
+     * @return string
+     */
     function getDeckString(){
 
         if(!isset($this->deck))return "";
@@ -140,6 +144,35 @@ class SkylordsDeckPlayer{
 
     }
 
+
+
+    /**
+     * Get Deck of Player as a String from played Cards. It appears getDeckString gives the wrong deck sometimes (see fyre example replay) so its better to use getDeckFromPlayedCards
+     * @return string
+     */
+    function getDeckStringFromPlayedCards(){
+
+        if(!isset($this->deck))return "";
+
+        $retval="";
+        $first=true;
+        foreach($this->cardsPlayed as $cardid=>$timesUsed){
+
+            if($first)$first=false;
+            else $retval.=", ";
+
+            $usedString="";
+
+            $usedString = "(ID $cardid, used ".$timesUsed." "."times)";
+
+            $retval .= SkylordsCardbase::getInstance()->getCardById($cardid)->cardName.$usedString;
+
+        }
+
+        return $retval;
+
+
+    }
     /**
      * Actions done by this player ordered by typeid (number)
      * @var int[]
