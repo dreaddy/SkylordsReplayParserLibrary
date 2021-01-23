@@ -128,11 +128,15 @@ class SkylordsReplayParser{
 
                    if(!isset($actionplayer[$player]["cardsPlayed"][$cardid])){
 
+                       $card = SkylordsCardbase::getInstance()->getCardById($cardid);
+
                        $actionplayer[$player]["cardsPlayed"][$cardid]=0;
+                       $actionplayer[$player]["cardsPlayed_detail"][$cardid]=array("cardid"=>$cardid, "upgrade"=>sl_extractCardUpgrade($action->data["card"]), "played"=>0, "name"=>$card->cardName, "playedOn"=>array());
+
+
 
                        if(!$actionplayer[$player]["enlightenment_played_before"])
                        {
-                           $card = SkylordsCardbase::getInstance()->getCardById($cardid);
                            $actionplayer[$player]["orbs"] = $this->expandOrbsUsed($card->fireOrbs, $card->frostOrbs, $card->natureOrbs, $card->shadowOrbs, $card->neutralOrbs, $actionplayer[$player]["orbs"]);
                        }else{
                            $actionplayer[$player]["enlightenment_played_before"]=false;
@@ -144,7 +148,11 @@ class SkylordsReplayParser{
 
 
                    }
+
                    $actionplayer[$player]["cardsPlayed"][$cardid]++;
+                   $actionplayer[$player]["cardsPlayed_detail"][$cardid]["played"]++;
+                   $actionplayer[$player]["cardsPlayed_detail"][$cardid]["playedOn"][]=$action->time;
+
 
                }
 
