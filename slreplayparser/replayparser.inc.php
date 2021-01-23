@@ -687,10 +687,22 @@ class SkylordsReplayParser{
        fseek($fp,0);
        $startpos = sl_seekUntilString( ".map", $fp, -1, true );*/
 
-       $replaydata->mapname = basename($replaydata->filename);
 
-       $replaydata->mapname = basename($replaydata->mapfilename);
+       $replaydata->mapname = pathinfo($replaydata->mapfilename)["filename"];
+       $last_backslash_in_mapname_pos = strrpos($replaydata->mapname, "\\");
+       if($last_backslash_in_mapname_pos !== false){
+           $replaydata->mapname=substr($replaydata->mapname, $last_backslash_in_mapname_pos, null);
+       }
+
+       $replaydata->mapname_with_metainfos=$replaydata->mapname;
+
+       $last_underline_in_mapname_pos = strrpos($replaydata->mapname, "_");
+       if($last_underline_in_mapname_pos !== false){
+           $replaydata->mapname=substr($replaydata->mapname, $last_underline_in_mapname_pos + 1, null);
+       }
+
        $replaydata->maptype = $replaydata->getTypeFromMapname();
+
        $startpos = sl_seekUntilString( ".map", $fp, -1, true );
 
        $replaydata->header_size_until_actions = sl_readUInt32($fp)+ftell($fp);

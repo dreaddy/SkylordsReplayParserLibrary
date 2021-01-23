@@ -137,15 +137,15 @@ class SkylordsReplayData{
 
    function getTypeFromMapname(){
 
-       if($this->mapname == "GeneratedMap.map"){
+       if($this->mapname == "GeneratedMap"){
            return "RPVE";
        }
 
-       if(str_contains($this->mapfilename, "PVE")!==false){
+       if(strpos($this->mapfilename, "PVE")!==null){
            return "PVE";
        }
 
-       if(str_contains($this->mapfilename, "PVP")!==false){
+       if(strpos($this->mapfilename, "PVP")!==null){
            return "PVP";
        }
 
