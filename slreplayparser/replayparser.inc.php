@@ -178,16 +178,6 @@ class SkylordsReplayParser{
 
        $replaydata->winnerteam = $replaydata->detectWinner();
 
-
-
-      // var_dump($replaydata->players);
-
-
-
-
-       // TODO: calculate Stuff
-
-
        return $replaydata;
 
    }
@@ -678,9 +668,10 @@ class SkylordsReplayParser{
 
        $replaydata->playtime = sl_readUInt32($fp);
 
-       if($replaydata->fileversion > 200) // $replaydata->header_new_dummy =
-           sl_readUInt32($fp);
-
+       if($replaydata->fileversion > 213) // $replaydata->header_new_dummy =
+       {
+         $replaydata->some_stuff_added_after_v_213 = sl_readUInt32($fp);
+       }
       // echo "version is ". $replaydata->fileversion;
 
        $replaydata->filetime = $filetime;
@@ -689,18 +680,27 @@ class SkylordsReplayParser{
        //$trash = fread($fp, 15);
 
 
-       $mapnamechunk = fread($fp, 150);
-       // name of the map. Also includes type
+       $replaydata->mapfilename = sl_readString($fp, 500);// name of the map. Also includes type
+
+      /* $mapnamechunk = fread($fp, 150);
        $replaydata->filename = substr($mapnamechunk,0,strpos($mapnamechunk, ".map")+4);
-       $replaydata->mapname = basename($replaydata->filename);
        fseek($fp,0);
+       $startpos = sl_seekUntilString( ".map", $fp, -1, true );*/
+
+       $replaydata->mapname = basename($replaydata->filename);
+
+       $replaydata->mapname = basename($replaydata->mapfilename);
+       $replaydata->maptype = $replaydata->getTypeFromMapname();
        $startpos = sl_seekUntilString( ".map", $fp, -1, true );
 
-       //echo "x $startpos x";
        $replaydata->header_size_until_actions = sl_readUInt32($fp)+ftell($fp);
-       $unknown = sl_readUInt16($fp);
+       $replaydata->unknown_data1 = sl_readUInt8($fp);
+       $replaydata->unknown_data2 = sl_readUInt8($fp);
        $replaydata->v_7 = sl_readUInt32($fp); // ??
-       $replaydata->player_per_team = sl_readUInt8($fp); // ??
+
+       $replaydata->difficulty = sl_readUInt8($fp); // TODO: verify how the playercount changes this number - I think on rpve i have to substract the playernumber
+
+
        $replaydata->V_0200 = sl_readUInt16($fp);
        $replaydata->hosterplayer_id = sl_readUInt64($fp);
        $replaydata->group_count = sl_readUInt8($fp);
@@ -775,14 +775,15 @@ class SkylordsReplayParser{
 
        }
 
+       if($replaydata->maptype == "RPVE")
+       {
+           $replaydata->difficulty-=count($replaydata->players); // TODO: test and verify
+       }
+
        fclose($fp);
-
-
-
 
        return $replaydata;
 
    }
-
 
 }

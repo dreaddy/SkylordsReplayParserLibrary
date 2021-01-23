@@ -52,5 +52,8 @@
     <Content Include="testreplays\only_ww_in_deck.pmv" />
     <Content Include="testreplays\played_4_shamans_c1.pmv" />
     <Content Include="testreplays\played_4_ww_c1.pmv" />
+    <Content Include="testreplays\twilight_adv_autosave.pmv" />
+    <Content Include="testreplays\twilight_easy_autosave.pmv" />
+    <Content Include="testreplays\twilight_expert_autosave.pmv" />
   </ItemGroup>
 </Project>

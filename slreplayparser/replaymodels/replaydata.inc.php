@@ -128,6 +128,33 @@ class SkylordsReplayData{
     */
    var $mapname;
 
+   /**
+    * Type of the map (rpve, pve pvp)
+    * @var string
+    */
+   var $maptype;
+
+
+   function getTypeFromMapname(){
+
+       if($this->mapname == "GeneratedMap.map"){
+           return "RPVE";
+       }
+
+       if(str_contains($this->mapfilename, "PVE")!==false){
+           return "PVE";
+       }
+
+       if(str_contains($this->mapfilename, "PVP")!==false){
+           return "PVP";
+       }
+
+       return "???";
+
+
+
+
+   }
 
    /**
     * Summary of $teams
@@ -155,16 +182,30 @@ class SkylordsReplayData{
    var $fileversion;
 
    /**
-    * Summary of $filename
+    * Name of the replayfile that is read
     * @var string
     */
    var $filename;
+
+   /**
+    * Name of the mapfile saved in skylords resources
+    * @var string
+    */
+   var $mapfilename;
 
    /**
     * Summary of $players
     * @var SkylordsDeckPlayer[]
     */
    var $players;
+
+   /**
+    * PVE 1 player tested difficulty (1 2 3 for std, adv xpt),
+    * RPVE 1 player: 1 to 10
+    * RPVE 4 Player: need to test, was 13. maybe contains playercount in the first bytes?
+    * @var mixed
+    */
+   var $difficulty;
 
    function isInNpcGroup($playerdata){
        if(empty($playerdata->deck->deckcards))return true;

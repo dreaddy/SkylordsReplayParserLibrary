@@ -99,13 +99,20 @@ function sl_readUInt32($handle){
 }
 
 function sl_strict_unpack($type, $bytes){
+    try{
+        $retval = unpack($type,$bytes);
+        return $retval;
+    }catch(Exception $ex){
+        debug_print_backtrace();
+        throw new Exception("unpack error $type $bytes ".$ex);
+    }
 
-    $retval = unpack($type,$bytes);
     if($retval === false){
+        debug_print_backtrace();
         throw new Exception("unpack failed $type $bytes");
     }
 
-    return $retval;
+
 
 }
 
@@ -169,6 +176,7 @@ function sl_readString($handle, $sizelimit = -1){
 
     //$bytes = fread( $handle, 4);
     $length = sl_readUInt32($handle); //unpack("V",$bytes)[1];
+    
     if($sizelimit != -1 && $sizelimit < $length){ // prevents crashes if not reading a wstring on this position but trash
         $length = $sizelimit;
     }
