@@ -132,6 +132,35 @@ class SkylordsDeckPlayer{
 
     }
 
+    function getOrbHtml($color){
+
+        $colorcodesOrbs = array(ORB_FIRE=>"#ff0000", ORB_FROST=>"#0000ff", ORB_NATURE=>"#00ff00", ORB_SHADOW=>"6A0DAD", ORB_NEUTRAL=>"#ffffff");
+
+        $retval = "<div class='orb' style='box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);;margin:3px;border-radius:45px;border:1px solid black;background-color:".$colorcodesOrbs[$color].";display: inline-block;width:20px;height:20px;'></div>";
+
+        return $retval;
+
+    }
+
+    function getOrbsHtml(){
+
+        if(!isset($this->orbs["in_order"]))return "";
+
+        $retval="";
+        $first=true;
+        foreach($this->orbs["in_order"] as $orbcolorstring){
+
+            if($first)$first=false;
+
+
+
+            $retval.=$this->getOrbHtml($orbcolorstring);
+        }
+
+        return $retval;
+
+    }
+
     /**
      * Get Deck of Player as a String. It appears to be the wrong deck sometimes so its better to use getDeckFromPlayedCards
      * maybe the deck is filled with the client deck the replay if from because it is unknown to the game.
@@ -176,7 +205,7 @@ class SkylordsDeckPlayer{
         $retval="<div class='deckwrap' >";
         $first=true;
         foreach($this->cardsPlayed_detail as $cardid=>$deckcardinfo){
-          
+
             $timesUsed = $deckcardinfo["played"];
             $upgrade = $deckcardinfo["upgrade"];
             $retval.="<div class='cardwrap' style='display:inline-block;width:120px;vertical-align:top;'>";

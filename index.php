@@ -86,19 +86,19 @@ foreach($replaydata->teams as $team){
 
 
     echo "<hr>";
-    echo "<h5>Group:".$team->id."(".$team->name.")"."</h5>";
+    echo "<h3>Group:".$team->id."(".$team->name.")"."</h5>";
 
 
     foreach($replaydata->getPlayerByGroup($team->id) as $player){
 
-        echo "<h5>Player:".$player->name."(".$player->id_in_group.")"."</h5>";
+        echo "<div style='padding-top:5px'><h4>".$player->name."</h4>";
 
-        echo "<p>APM:".$player->apm."</p>";
-        echo "<p>Monuments:".$player->getOrbsString()."</p>";
+        echo "<h5>APM:".$player->apm."</h5>";
+        echo "<h5>Monuments: ".$player->getOrbsHtml()."</h5>";
         // echo "<p>Deck:".$player->getDeckStringFromPlayedCards()."</p>";
 
-        echo "<p>Deck:".$player->getDeckHtmlFromPlayedCards()."</p>";
-
+        echo "<h5>Deck:<div style='border:1px solid black;padding:5px;'>".$player->getDeckHtmlFromPlayedCards()."</div></h5>";
+        echo "</div>";
 
     }
 

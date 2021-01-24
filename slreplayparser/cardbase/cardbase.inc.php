@@ -108,13 +108,20 @@ class SkylordsCardbase{
     }
 
 
-    function getCardByName($cardname, $ignoreIds=array()){
-        
-       
+    function getCardByName($cardname, $ignoreIds=array(), $isPromo = false){
+
+
 
         foreach($this->cards as $card){
             if(isset($ignoreIds[$card->cardId]))continue;
-            if($card->cardName == $cardname)return $card;
+            if($card->cardName == $cardname){
+                if($card->promo == "Yes" && $isPromo){
+                    return $card;
+                }
+                else if($card->promo == "No" && !$isPromo){
+                    return $card;
+                }
+            }
         }
 
 

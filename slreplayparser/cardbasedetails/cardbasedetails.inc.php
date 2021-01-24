@@ -95,12 +95,17 @@ class SkylordsCardbaseDetails{
         $this->cards=array();
 
 
-        $cardidsUsed = array(); // card may exist multiple times. we want both ids then not only one. Hopefully the order is the same as in die marketplace api
-        foreach($content->Result as $data){
+        $cardidsUsed = array(); // card may exist multiple times. We want both ids then not only one. TODO: test if affinity is always right now. works on my testcards.
 
-            $cardnameCleaned = trim(str_replace(" (promo)", "", $data->Name)); // name in cardapi is xy (promo) for promocards. Not in marketplace api . . . 
+        foreach(array_reverse($content->Result) as $data){
 
-            $card = SkylordsCardbase::getInstance()->getCardByName($cardnameCleaned, $cardidsUsed);
+            $isPromo = strpos($data->Name, " (promo)") !== false;
+
+            $cardnameCleaned = trim(str_replace(" (promo)", "", $data->Name)); // name in cardapi is xy (promo) for promocards. Not in marketplace api . . .
+
+
+
+            $card = SkylordsCardbase::getInstance()->getCardByName($cardnameCleaned, $cardidsUsed, $isPromo);
             $data->cardId = $card->cardId;
            // echo "id is ".$card->cardId;
             $this->cards[$data->cardId]=new SkylordsCardDetail($data);
