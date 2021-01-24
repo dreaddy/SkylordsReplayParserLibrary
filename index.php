@@ -95,8 +95,9 @@ foreach($replaydata->teams as $team){
 
         echo "<p>APM:".$player->apm."</p>";
         echo "<p>Monuments:".$player->getOrbsString()."</p>";
-        echo "<p>Deck:".$player->getDeckStringFromPlayedCards()."</p>";
+        // echo "<p>Deck:".$player->getDeckStringFromPlayedCards()."</p>";
 
+        echo "<p>Deck:".$player->getDeckHtmlFromPlayedCards()."</p>";
 
 
     }

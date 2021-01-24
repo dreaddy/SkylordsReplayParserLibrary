@@ -13,6 +13,7 @@
  */
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."utils/slutils.inc.php");
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."cardbase/cardbase.inc.php");
+require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."cardbasedetails/cardbasedetails.inc.php");
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."replaymodels/replaydata.inc.php");
 
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."replaymodels/replaydeckplayer.inc.php");

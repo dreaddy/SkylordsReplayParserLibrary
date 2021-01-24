@@ -14,6 +14,13 @@
 
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."replaydeck.inc.php");
 
+class CardsPlayedDetail{
+    public $cardid;
+    public $upgrade;
+    public $played;
+    public $name;
+    public $playedOn;
+}
 
 class SkylordsDeckPlayer{
 
@@ -30,7 +37,7 @@ class SkylordsDeckPlayer{
      */
     public $name;
 
- 
+
 
     /**
      * Group of Player. "Real" Players (non NPC) are always in team 4 and 5. See "teams" in replaydata
@@ -68,6 +75,14 @@ class SkylordsDeckPlayer{
      * @var int[]
      */
     public $cardsPlayed;
+
+        /**
+     * Cards played with more detailled Infos
+     * @var CardsPlayedDetail[]
+     */
+    public $cardsPlayed_detail;
+
+
 
     /**
      * Has player left the game by pressing quit. Does not cover a defeat by loosing stuff
@@ -148,6 +163,58 @@ class SkylordsDeckPlayer{
     }
 
 
+
+
+     /**
+     * Get Deck of Player as a String from played Cards. It appears getDeckString gives the wrong deck sometimes (see fyre example replay) so its better to use getDeckFromPlayedCards
+     * @return string
+     */
+    function getDeckHtmlFromPlayedCards(){
+
+        if(!isset($this->deck))return "";
+
+        $retval="<div class='deckwrap' >";
+        $first=true;
+        foreach($this->cardsPlayed_detail as $cardid=>$deckcardinfo){
+          
+            $timesUsed = $deckcardinfo["played"];
+            $upgrade = $deckcardinfo["upgrade"];
+            $retval.="<div class='cardwrap' style='display:inline-block;width:120px;vertical-align:top;'>";
+            $cardinfo = SkylordsCardbase::getInstance()->getCardById($cardid);
+            $cardinfodetails = SkylordsCardbaseDetails::getInstance()->getCardById($cardid);
+
+            $retval.="<p style='text-align:center;font-weight:bold;min-height:38px;'>".$cardinfo->cardName."</p>";
+
+            if(empty($cardinfodetails)){
+                if(SL_DEBUG)
+                echo "Warning: carddetails not set:".$cardid;;
+            }
+
+
+            if(empty($cardinfodetails->Image->Url)){
+                if(SL_DEBUG)
+                echo "Warning: carddetailsimage not set:".$cardid;
+            }
+
+            if($first)$first=false;
+
+
+            $usedString="";
+
+            if(!empty($cardinfodetails)){
+                $retval.="<img style='width:120px' src='".CARDIMG_BASE_URI.$cardinfodetails->Image->Url."'>";
+            }
+
+            $usedString .= "(Upg:{$upgrade} Used:{$timesUsed}x)";
+
+            $retval .= $usedString;
+            $retval.="</div>";
+        }
+        $retval.="</div>";
+        return $retval;
+
+
+    }
 
     /**
      * Get Deck of Player as a String from played Cards. It appears getDeckString gives the wrong deck sometimes (see fyre example replay) so its better to use getDeckFromPlayedCards

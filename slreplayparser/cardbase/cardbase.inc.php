@@ -17,12 +17,19 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."../utils/slutils.inc.php");
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR."card.inc.php");
 
 /**
- * cardloader for data from carddata.json or https://auctions.backend.skylords.eu/api/cards/all
+ * cardloader for data from carddata.json or https://auctions.backend.skylords.eu/api/cards/all (skylords marketplace)
+ * Not used any more because the cardbase api has more details (like images)
  * Used to assign the correct Carddata for the playerdecks and actions
  */
 class SkylordsCardbase{
 
+    function __construct(){
+        $this->loadCards();
+    }
+
     private static $instance = null;
+
+
 
     /**
      * Summary of getInstance
@@ -97,6 +104,25 @@ class SkylordsCardbase{
         }
 
         return new SkylordsCard(array("cardId"=>$cardid, "cardName"=>"unknown_card_$cardid"));
+
+    }
+
+
+    function getCardByName($cardname, $ignoreIds=array()){
+        
+       
+
+        foreach($this->cards as $card){
+            if(isset($ignoreIds[$card->cardId]))continue;
+            if($card->cardName == $cardname)return $card;
+        }
+
+
+        if(SL_DEBUG){
+            echo "invalid Cardname: $card . update data/carddata.json from https://auctions.backend.skylords.eu/api/cards/all";
+        }
+
+        return new SkylordsCard(array("cardId"=>-1, "cardName"=>"unknown_card_$cardname"));
 
     }
 

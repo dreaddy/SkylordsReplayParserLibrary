@@ -16,14 +16,17 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="recreatecarddetailjson.php" />
+    <Compile Include="slreplayparser\cardbase\card.inc.php" />
     <Compile Include="slreplayparser\cardbase\cardbase.inc.php" />
+    <Compile Include="slreplayparser\cardbasedetails\cardbasedetails.inc.php" />
     <Compile Include="slreplayparser\replaymodels\replayaction.inc.php" />
     <Compile Include="slreplayparser\replaymodels\replaydeck.inc.php" />
     <Compile Include="slreplayparser\replaymodels\replaydeckplayer.inc.php" />
     <Compile Include="slreplayparser\replaymodels\replayteam.inc.php" />
     <Compile Include="slreplayparser\replaymodels\replaydeckcard.inc.php" />
     <Compile Include="slreplayparser\replaymodels\replaydata.inc.php" />
-    <Compile Include="slreplayparser\cardbase\card.inc.php" />
+    <Compile Include="slreplayparser\cardbasedetails\carddetail.inc.php" />
     <Compile Include="slreplayparser\replayparser.inc.php" />
     <Compile Include="slreplayparser\utils\slutils.inc.php" />
     <Compile Include="testreplays\PvE Mo dreaddy(NONX) 2009-08-06 20-58-51.pmv" />
@@ -37,6 +40,7 @@
     <Folder Include="Properties\" />
     <Folder Include="slreplayparser\" />
     <Folder Include="slreplayparser\cardbase\" />
+    <Folder Include="slreplayparser\cardbasedetails\" />
     <Folder Include="slreplayparser\data\" />
     <Folder Include="slreplayparser\replaymodels\" />
     <Folder Include="slreplayparser\utils\" />
@@ -45,7 +49,11 @@
   <ItemGroup>
     <Content Include="doc\format.txt" />
     <Content Include="license.txt" />
+    <Content Include="README.md" />
     <Content Include="slreplayparser\data\carddata.json" />
+    <Content Include="slreplayparser\data\carddetailswithid.min.json" />
+    <Content Include="slreplayparser\data\GetCardsCardbase.json" />
+    <Content Include="slreplayparser\data\GetCardsCardbase.min.json" />
     <Content Include="testreplays\19.01.2021, 02_15_59 randommap_GeneratedMap mit dreaddy %28ONNX%29 vs pl_Player5 %28%29 in 14_19_3.pmv" />
     <Content Include="testreplays\19.01.2021, 16_56_44 randommap_GeneratedMap mit dreaddy %28SNNX%29 vs pl_Player5 %28%29 in 14_38_5.pmv" />
     <Content Include="testreplays\only_shaman_in_deck.pmv" />
