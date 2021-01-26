@@ -77,7 +77,7 @@ echo "<p>Maptype: ".$replaydata->maptype."</p>";
 if($replaydata->maptype != "PVP")
 echo "<p>Difficulty: ".$replaydata->difficulty."</p>";
 
-echo "<p>Duration of Replay: ".$replaydata->getReplayTimeString()."</p>";
+echo "<p>Length of Replay: ".$replaydata->getReplayTimeString()."</p>";
 echo "<p>Winner: ".$replaydata->getWinnerteamString()."</p>";
 
 

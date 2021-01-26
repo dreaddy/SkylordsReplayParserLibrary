@@ -17,6 +17,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="recreatecarddetailjson.php" />
+    <Compile Include="replaymodels\sl_replay.php" />
+    <Compile Include="replaymodels\sl_replay_player.php" />
+    <Compile Include="replaymodels\sl_replay_player_card.php" />
     <Compile Include="slreplayparser\cardbase\card.inc.php" />
     <Compile Include="slreplayparser\cardbase\cardbase.inc.php" />
     <Compile Include="slreplayparser\cardbasedetails\cardbasedetails.inc.php" />
@@ -37,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />
+    <Folder Include="replaymodels\" />
     <Folder Include="Properties\" />
     <Folder Include="slreplayparser\" />
     <Folder Include="slreplayparser\cardbase\" />
@@ -51,6 +55,7 @@
     <Content Include="license.txt" />
     <Content Include="README.md" />
     <Content Include="slreplayparser\data\carddata.json" />
+    <Content Include="slreplayparser\data\carddetailswithid.json" />
     <Content Include="slreplayparser\data\carddetailswithid.min.json" />
     <Content Include="slreplayparser\data\GetCardsCardbase.json" />
     <Content Include="slreplayparser\data\GetCardsCardbase.min.json" />

@@ -141,11 +141,11 @@ class SkylordsReplayData{
            return "RPVE";
        }
 
-       if(strpos($this->mapfilename, "PVE")!==null){
+       if(strpos($this->mapfilename, "PVE")!==false){
            return "PVE";
        }
 
-       if(strpos($this->mapfilename, "PVP")!==null){
+       if(strpos($this->mapfilename, "PVP")!==false){
            return "PVP";
        }
 
@@ -157,6 +157,7 @@ class SkylordsReplayData{
    }
 
    /**
+    * Summary of $teams
     * Summary of $teams
     * @var SkylordsTeam
     */

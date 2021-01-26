@@ -74,13 +74,13 @@ class SkylordsDeckPlayer{
      * Summary of $cardsPlayed
      * @var int[]
      */
-    public $cardsPlayed;
+    public $cardsPlayed = array();
 
         /**
      * Cards played with more detailled Infos
      * @var CardsPlayedDetail[]
      */
-    public $cardsPlayed_detail;
+    public $cardsPlayed_detail  = array();
 
 
 

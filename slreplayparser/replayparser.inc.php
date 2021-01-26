@@ -696,21 +696,27 @@ class SkylordsReplayParser{
        fseek($fp,0);
        $startpos = sl_seekUntilString( ".map", $fp, -1, true );*/
 
+       $replaydata->mapname = trim(pathinfo($replaydata->mapfilename)["filename"]);
 
-       $replaydata->mapname = pathinfo($replaydata->mapfilename)["filename"];
-       $last_backslash_in_mapname_pos = strrpos($replaydata->mapname, "\\");
+       // always in windows format, problems on linux servers, so do it manually again if possible
+       $last_backslash_in_mapname_pos = strrpos($replaydata->mapfilename, "\\");
+
        if($last_backslash_in_mapname_pos !== false){
-           $replaydata->mapname=substr($replaydata->mapname, $last_backslash_in_mapname_pos, null);
+           $replaydata->mapname=substr($replaydata->mapfilename, $last_backslash_in_mapname_pos);
        }
 
        $replaydata->mapname_with_metainfos=$replaydata->mapname;
 
        $last_underline_in_mapname_pos = strrpos($replaydata->mapname, "_");
        if($last_underline_in_mapname_pos !== false){
-           $replaydata->mapname=substr($replaydata->mapname, $last_underline_in_mapname_pos + 1, null);
+           $replaydata->mapname=substr($replaydata->mapname, $last_underline_in_mapname_pos + 1);
+
        }
 
-       $replaydata->maptype = $replaydata->getTypeFromMapname();
+        $replaydata->mapname=str_replace(".map", "", $replaydata->mapname);
+        $replaydata->mapname=str_replace("\\randommap/", "", $replaydata->mapname);
+
+        $replaydata->maptype = $replaydata->getTypeFromMapname();
 
        $startpos = sl_seekUntilString( ".map", $fp, -1, true );
 
